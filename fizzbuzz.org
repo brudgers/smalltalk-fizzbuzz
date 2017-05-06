@@ -84,4 +84,3 @@ The subtilty this glosses over is that most of the time when using strings, peop
   <<loop-over-interval>>
 #+END_SRC
 ** Loop over the interval
-
