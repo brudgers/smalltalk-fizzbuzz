@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-05 Fri 21:14 -->
+<!-- 2017-05-05 Fri 21:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -232,21 +232,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4a8b3ac">Extending class Integer</a>
+<li><a href="#org808f99c">Extending class Integer</a>
 <ul>
-<li><a href="#orgb1f00fb">C-like fall through</a></li>
-<li><a href="#orgf8226de">As a Decision Tree</a></li>
+<li><a href="#org019aabb">C-like fall through</a></li>
+<li><a href="#orga55c9ad">As a Decision Tree</a></li>
 </ul>
 </li>
-<li><a href="#orga05062e">Notes</a>
+<li><a href="#orga0acffc">Notes</a>
 <ul>
-<li><a href="#org46ff1f9">Printing Strings</a></li>
+<li><a href="#org659f6a6">Printing Strings</a></li>
 </ul>
 </li>
-<li><a href="#org868c485">Crackle Pop</a>
+<li><a href="#org7962af1">Crackle Pop</a>
 <ul>
-<li><a href="#orgaa3333d">Extend Integer</a></li>
-<li><a href="#org940ec24">Loop over the interval</a></li>
+<li><a href="#orgc541b36">Extend Integer</a></li>
+<li><a href="#orga969b96">Loop over the interval</a></li>
 </ul>
 </li>
 </ul>
@@ -260,14 +260,14 @@ This document implements fizzbuzz in smalltalk. It was created as part of an app
 Write a program that prints out the numbers 1 to 100 (inclusive). If the number is divisible by 3, print Crackle instead of the number. If it's divisible by 5, print Pop. If it's divisible by both 3 and 5, print CracklePop. You can use any language.
 </p>
 </blockquote>
-<div id="outline-container-org4a8b3ac" class="outline-2">
-<h2 id="org4a8b3ac">Extending class Integer</h2>
-<div class="outline-text-2" id="text-org4a8b3ac">
+<div id="outline-container-org808f99c" class="outline-2">
+<h2 id="org808f99c">Extending class Integer</h2>
+<div class="outline-text-2" id="text-org808f99c">
 <p>
 The GNU-Smalltalk Tutorial has an <a href="https://www.gnu.org/software/smalltalk/manual/html_node/Syntax.html#Syntax">example</a> where <code>Number</code> is extended to calculate the radius and circumference of circles. It formed the basis for my approach here. In part because it expresses the way Smalltalk can be used and takes me out of my comfort zone.
 </p>
 <div class="org-src-container">
-<pre class="src src-smalltalk">Number extend [
+<pre class="src src-smalltalk" id="org28e2c11">Number extend [
     radiusToArea [
         ^self squared * Float pi
     ]
@@ -275,12 +275,14 @@ The GNU-Smalltalk Tutorial has an <a href="https://www.gnu.org/software/smalltal
         ^self * 2 * Float pi
     ]
 ]
+
+&lt;&lt;loop-over-interval&gt;&gt;
 </pre>
 </div>
 </div>
-<div id="outline-container-orgb1f00fb" class="outline-3">
-<h3 id="orgb1f00fb">C-like fall through</h3>
-<div class="outline-text-3" id="text-orgb1f00fb">
+<div id="outline-container-org019aabb" class="outline-3">
+<h3 id="org019aabb">C-like fall through</h3>
+<div class="outline-text-3" id="text-org019aabb">
 <p>
 I started out trying to find a <code>switch/case/cond</code> control structure. When Googling produced some exotic approaches via StackOverflow, I reckoned I might be swimming against a tide.
 </p>
@@ -308,9 +310,9 @@ Early attempts at this implementation ran into the difficulty of not printing th
 </div>
 </div>
 </div>
-<div id="outline-container-orgf8226de" class="outline-3">
-<h3 id="orgf8226de">As a Decision Tree</h3>
-<div class="outline-text-3" id="text-orgf8226de">
+<div id="outline-container-orga55c9ad" class="outline-3">
+<h3 id="orga55c9ad">As a Decision Tree</h3>
+<div class="outline-text-3" id="text-orga55c9ad">
 <p>
 Since Smalltalk does not have an equivalent to <code>switch</code> or <code>case</code> or Lisp's <code>cond</code>. This probably reflects the fact that each message to which an object responds must be explicitly defined and <code>switch/case/cond</code> is designed to accept an arbitrary number of arguments. While it might be possible to generate a set of messages that cover many likely <i>arities</i> <code>Object</code> would receive, it probably is not worth building into the base language.
 </p>
@@ -335,12 +337,12 @@ Since Smalltalk does not have an equivalent to <code>switch</code> or <code>case
 </div>
 </div>
 </div>
-<div id="outline-container-orga05062e" class="outline-2">
-<h2 id="orga05062e">Notes</h2>
-<div class="outline-text-2" id="text-orga05062e">
-</div><div id="outline-container-org46ff1f9" class="outline-3">
-<h3 id="org46ff1f9">Printing Strings</h3>
-<div class="outline-text-3" id="text-org46ff1f9">
+<div id="outline-container-orga0acffc" class="outline-2">
+<h2 id="orga0acffc">Notes</h2>
+<div class="outline-text-2" id="text-orga0acffc">
+</div><div id="outline-container-org659f6a6" class="outline-3">
+<h3 id="org659f6a6">Printing Strings</h3>
+<div class="outline-text-3" id="text-org659f6a6">
 <p>
 Most Smalltalk tutorials begin with something like:
 </p>
@@ -355,18 +357,30 @@ The subtilty this glosses over is that most of the time when using strings, peop
 </div>
 </div>
 </div>
-<div id="outline-container-org868c485" class="outline-2">
-<h2 id="org868c485">Crackle Pop</h2>
-<div class="outline-text-2" id="text-org868c485">
-</div><div id="outline-container-orgaa3333d" class="outline-3">
-<h3 id="orgaa3333d">Extend Integer</h3>
-<div class="outline-text-3" id="text-orgaa3333d">
+<div id="outline-container-org7962af1" class="outline-2">
+<h2 id="org7962af1">Crackle Pop</h2>
+<div class="outline-text-2" id="text-org7962af1">
+</div><div id="outline-container-orgc541b36" class="outline-3">
+<h3 id="orgc541b36">Extend Integer</h3>
+<div class="outline-text-3" id="text-orgc541b36">
 <p>
 #+Name crackle-pop
 </p>
 <div class="org-src-container">
-<pre class="src src-smalltalk">Integer extend [
-    (self \\ 15 = 0)
+<pre class="src src-smalltalk">"cracklePop.st
+
+Print out the numbers 1 to 100 (inclusive). 
+  + If the number is divisible by 3, print Crackle instead of the number. 
+  + If it's divisible by 5, print Pop. 
+  + If it's divisible by both 3 and 5, print CracklePop.
+
+To load the program use: 
+  FileStream fileIn: 'cracklePop.st'
+"
+
+Integer extend [
+    cracklePop [
+        (self \\ 15 = 0)
         ifTrue: ['CracklePop' displayNl]
         ifFalse: [
             (self \\ 3 = 0)
@@ -374,24 +388,38 @@ The subtilty this glosses over is that most of the time when using strings, peop
                 ifFalse: [
                     (self \\ 5 = 0)
                         ifTrue:['Pop' displayNl]
-                        ifFalse: [self printNl]
+                        ifFalse: [self displayNl]
                 ]
         ]
+    ]
 ]
-
 &lt;&lt;loop-over-interval&gt;&gt;
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org940ec24" class="outline-3">
-<h3 id="org940ec24">Loop over the interval</h3>
+<div id="outline-container-orga969b96" class="outline-3">
+<h3 id="orga969b96">Loop over the interval</h3>
+<div class="outline-text-3" id="text-orga969b96">
+<p>
+By looping standards, iterating over an index in Smalltalk at first feels a bit indirect uses the <code>Interval</code> object. But after thinking about it a bit, I realized that this is sort of prelude to some languages' generator syntax (even if it is not lazy).
+</p>
+
+<p>
+It also feels a bit verbose, but after realizing it replaces symbols with letters composing words, it probably is about the same number of characters and closer to ordinary English. Not trying to conform to the structure of Algol and Fortran and C is one of the things I have really started to appreciate about Smalltalk.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-smalltalk" id="orgfe02549">1 to: 100 by: 1 do: [:i | i cracklePop]
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: benrudgers</p>
-<p class="date">Created: 2017-05-05 Fri 21:14</p>
+<p class="date">Created: 2017-05-05 Fri 21:40</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
