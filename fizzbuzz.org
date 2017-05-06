@@ -1,0 +1,87 @@
+#+OPTIONS: num:nil
+This document implements fizzbuzz in smalltalk. It was created as part of an application for the [[https://www.recurse.com][Recurse Center]].
+#+BEGIN_QUOTE
+Write a program that prints out the numbers 1 to 100 (inclusive). If the number is divisible by 3, print Crackle instead of the number. If it's divisible by 5, print Pop. If it's divisible by both 3 and 5, print CracklePop. You can use any language.
+#+END_QUOTE
+* Extending class Integer
+The GNU-Smalltalk Tutorial has an [[https://www.gnu.org/software/smalltalk/manual/html_node/Syntax.html#Syntax][example]] where =Number= is extended to calculate the radius and circumference of circles. It formed the basis for my approach here. In part because it expresses the way Smalltalk can be used and takes me out of my comfort zone.
+#+BEGIN_SRC smalltalk
+  Number extend [
+      radiusToArea [
+          ^self squared * Float pi
+      ]
+      radiusToCircumference [
+          ^self * 2 * Float pi
+      ]
+  ]
+#+END_SRC
+** C-like fall through
+I started out trying to find a =switch/case/cond= control structure. When Googling produced some exotic approaches via StackOverflow, I reckoned I might be swimming against a tide.
+
+Early attempts at this implementation ran into the difficulty of not printing the default case when something else matches. The solution to use =^nil= suggests how ugly this approach is.
+#+BEGIN_SRC smalltalk
+   Integer extend [
+       fb [
+           (self \\ 15 = 0)
+               ifTrue: ['fizzbuzz' printNl.
+                        ^nil].
+           (self \\ 3 = 0)
+               ifTrue: ['buzz' printNl.
+                        ^nil].
+           (self \\ 5 = 0)
+               ifTrue: ['fizz' printNl.
+                        ^nil].
+           self printNl.
+           ^nil.
+       ]
+   ]
+ #+END_SRC
+** As a Decision Tree
+Since Smalltalk does not have an equivalent to =switch= or =case= or Lisp's =cond=. This probably reflects the fact that each message to which an object responds must be explicitly defined and =switch/case/cond= is designed to accept an arbitrary number of arguments. While it might be possible to generate a set of messages that cover many likely /arities/ =Object= would receive, it probably is not worth building into the base language.
+#+BEGIN_SRC smalltalk
+   Integer extend [
+       fizzbuzz [ 
+           (self \\ 15 = 0)
+           ifTrue: ['fizzbuzz' printNl]
+           ifFalse: [
+                (self \\ 3 = 0)
+                ifTrue: ['fizz' printNl]
+                ifFalse: [
+                     (self \\ 5 = 0)
+                     ifTrue: ['buzz' printNl]
+                     ifFalse: [self printNl]
+                ]
+           ]
+       ]
+   ]
+ #+END_SRC
+* Notes
+** Printing Strings
+Most Smalltalk tutorials begin with something like:
+#+BEGIN_SRC smalltalk
+  'Hello World' printNl
+  " -> 'Hello World' "
+#+END_SRC
+The subtilty this glosses over is that most of the time when using strings, people don't want the string's =Object= represention with the quotation marks. They want =Hello World= not ='Hello World'=. Smalltalk being Smalltalk, it is certainly possible to redefine the message =printNl= for =String=. But there is a built in alternative [[https://www.gnu.org/software/smalltalk/manual-base/html_node/Object_002dprinting.html][displayNl]] that strips off the quotation marks.
+* Crackle Pop
+** Extend Integer 
+#+Name crackle-pop
+#+BEGIN_SRC smalltalk :tangle cracklePop.st :noweb tangle
+  Integer extend [
+      (self \\ 15 = 0)
+          ifTrue: ['CracklePop' displayNl]
+          ifFalse: [
+              (self \\ 3 = 0)
+                  ifTrue: ['Crackle' displayNl]
+                  ifFalse: [
+                      (self \\ 5 = 0)
+                          ifTrue:['Pop' displayNl]
+                          ifFalse: [self printNl]
+                  ]
+          ]
+  ]
+
+  <<loop-over-interval>>
+#+END_SRC
+** Loop over the interval
+
